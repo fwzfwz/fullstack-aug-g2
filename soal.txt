@@ -1,0 +1,9 @@
+[10, 23, 456, 21, 77, 85, 19, 92, 43, 35];
+
+buat function(return type=array) yang menghasilkan :
+	- bilangan prima(arr.filter)
+	- bilangan yang habis dibagi 5(arr.filter)
+	- bilangan yang lebih besar dari 636(arr.filter)
+	- luas lingkaran, jika bilangan diatas adalah jari-jari(arr.map)
+	- luas persegi, jika bilangan diatas adalah sisi(arr.map)
+	- volume kubus, jika bilangan diatas adalah sisi(arr.map)
