@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+  <title>Day 4</title>
+</head>
+
+<body>
+  <div class="page w-50 mx-auto mt-5">
+    <ul class="nav nav-tabs mb-5">
+      <li class="nav-item">
+        <!-- <a class="nav-link" onclick="changePageTo('input')" href="#">Register Tamu</a> -->
+        <a class="nav-link" id="input-nav" href="#">Register Tamu</a>
+      </li>
+      <li class="nav-item">
+        <!-- <a class="nav-link" onclick="changePageTo('daftar')" href="#">Daftar Tamu</a> -->
+        <a class="nav-link" id="daftar-nav" href="#">Daftar Tamu</a>
+      </li>
+    </ul>
+    <div class="input-form px-5" id="input-tamu">
+      <form>
+        <div class="form-group">
+          <label for="exampleInputEmail1">NIK</label>
+          <input type="text" class="form-control" id="nik" aria-describedby="emailHelp">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Nama</label>
+          <input type="text" class="form-control" id="name" aria-describedby="emailHelp">
+          <small id="emailHelp" class="form-text text-muted">Mohon Isi Nama Lengkap Anda</small>
+        </div>
+        <div class="form-group">
+          <label for="exampleInputEmail1">PIC</label>
+          <input type="text" class="form-control" id="pic" aria-describedby="emailHelp">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Kepentingan</label>
+          <select class="custom-select" id="kepentingan">
+            <option value="bisnis">Bisnis</option>
+            <option value="pribadi">Pribadi</option>
+          </select>
+        </div>
+        <!-- <button class="btn btn-primary" onclick="addTamu()">Pesan</button> -->
+        <button class="btn btn-primary" id="pesan">Pesan</button>
+      </form>
+    </div>
+    <div class="daftar-tamu px-5" id="daftar-tamu" style="display: none;">
+      <!-- <button onclick="hapusDaftar()">Hapus Daftar</button> -->
+      <div class="d-flex">
+        <button id="hapus-daftar" class="mr-5 btn btn-danger">Hapus Daftar</button>
+        <form>
+          <input type="text" id="search-input" class="ml-5" required>
+          <button id="search-nik" type="submit" class="btn btn-primary">Search NIK</button>
+        </form>
+        <button id="clear-search" class="btn btn-primary mx-1" style="display: none;">X</button>
+      </div>
+      <table class="table table-striped mt-3" id="daftar">
+        <thead>
+          <tr>
+            <th scope="col">NIK</th>
+            <th scope="col">Nama</th>
+            <th scope="col">PIC</th>
+            <th scope="col">Kepentingan</th>
+            <th scope="col">Delete</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+    integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+    crossorigin="anonymous"></script>
+  <script type="module" src="js/main.js"></script>
+  <!-- <script src="script.js"></script> -->
+</body>
+
+</html>

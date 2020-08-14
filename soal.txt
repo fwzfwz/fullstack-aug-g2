@@ -1,0 +1,2 @@
+- memiliki input NIK(unique), Nama, PIC, Kepentingan
+- Menggunakan metode array & object
