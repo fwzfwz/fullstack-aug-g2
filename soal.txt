@@ -1,0 +1,3 @@
+- css menggunakan framework
+- halaman contact us
+- min 5 pages

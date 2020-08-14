@@ -1,0 +1,67 @@
+.top .left {
+  width: 40%;
+  background-color: #2c3f4d;
+}
+
+.contact-banner {
+  height: 35px;
+  background-color: #f7b614;
+}
+
+.contact-section p {
+  font-size: 13px;
+}
+
+.history .left {
+  width: 40%;
+  color: whitesmoke;
+  background-color: #2c3f4d;
+}
+
+.history .right {
+  width: 57%;
+}
+
+.edu h2 {
+  font-size: 27px;
+}
+
+.edu h3 {
+  font-size: 17px;
+}
+
+.edu h5 {
+  font-size: 12px;
+}
+
+.skill h2 {
+  font-size: 27px;
+}
+
+.skill h4 {
+  font-size: 17px;
+}
+
+.biography h2 {
+  font-size: 22px;
+}
+
+.biography p {
+  font-size: 13px;
+}
+
+.experience .section {
+  background-color: #f7b614;
+}
+
+.company h5 {
+  font-size: 13px;
+}
+
+.contact-icon {
+  height: 20px;
+}
+
+.second {
+  background-color: #eee;
+}
