@@ -1,0 +1,6 @@
+-localstorage
+-karyawan
+-departement
+-assignDept
+-login
+-vanilla
