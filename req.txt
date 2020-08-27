@@ -1,0 +1,6 @@
+Page 1: (Masuk Parkir)
+Page 2: (Keluar Parkir)
+5000 3000
+3000 1000
+login operator & admin
+chart per operator

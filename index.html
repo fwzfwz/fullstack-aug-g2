@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    />
+
+    <title>Day 6 - Parkir</title>
+  </head>
+  <body>
+    <header class="d-none">
+      <nav
+        class="navbar navbar-expand-lg navbar-light bg-light shadow pr-3 pl-4"
+      >
+        <a class="navbar-brand" href="#">Day 6</a>
+        <div class="collapse navbar-collapse" id="navbarText">
+          <ul class="navbar-nav mr-auto"></ul>
+          <div class="dropdown">
+            <button
+              class="btn dropdown-toggle"
+              type="button"
+              id="account-menu"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              default
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <button
+                class="dropdown-item"
+                data-toggle="modal"
+                data-target="#change-password-modal"
+              >
+                Change Password
+              </button>
+              <button class="dropdown-item" id="logout-button">Logout</button>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <div
+      class="modal fade"
+      id="change-password-modal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="add-karyawan-modal-label">
+              Change Password
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="input-nama-karyawan">Old Password</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="input-old-password"
+                />
+              </div>
+              <div class="form-group">
+                <label for="input-nama-karyawan">New Password</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="input-new-password"
+                />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              id="change-password-button"
+            >
+              Change Password
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END HEADER -->
+    <div class="w-25 mx-auto mt-5 pt-5" id="login-page">
+      <form id="login-form">
+        <div class="form-group">
+          <label for="exampleInputEmail1">NIP</label>
+          <input
+            type="text"
+            class="form-control"
+            id="input-nip"
+            aria-describedby="emailHelp"
+            required
+          />
+          <small id="emailHelp" class="form-text text-muted"
+            >Masukkan NIP Anda (16 Character Numeric)</small
+          >
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="input-password"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
+      </form>
+    </div>
+    <!-- END LOGIN -->
+    <div class="container mt-5">
+      <div id="operator-page" class="d-none">
+        <div class="row m-5">
+          <h1 class="mx-auto" id="clock-h1"></h1>
+        </div>
+        <div class="row">
+          <div class="col-lg">
+            <div class="masuk">
+              <div class="d-flex mb-3">
+                <input type="text" id="plat-nomor" />
+                <select name="tipe-kendaraan" id="tipe-kendaraan">
+                  <option value="mobil">Mobil</option>
+                  <option value="motor">Motor</option> </select
+                ><button class="btn btn-primary mx-1" id="btn-token">
+                  Generate Token
+                </button>
+              </div>
+              <h5 id="token-waktu-masuk"></h5>
+              <h5 id="generated-token"></h5>
+            </div>
+          </div>
+          <div class="col-lg">
+            <div class="keluar">
+              <div class="d-flex mb-3">
+                <input type="text" id="token-parkir" />
+                <button class="btn btn-primary mx-1" id="btn-biaya">
+                  Cek Biaya
+                </button>
+              </div>
+              <h5 id="biaya-waktu-masuk"></h5>
+              <h5 id="biaya-waktu-keluar"></h5>
+              <h5 id="biaya-parkir"></h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="d-none mb-5" id="admin-page">
+        <div class="row">
+          <div class="col-lg">
+            <div class="row">
+              <canvas id="op1-pie-js" class="w-100 h-100"> </canvas>
+            </div>
+          </div>
+          <div class="col-lg">
+            <canvas id="op2-pie-js" class="w-100 h-100"> </canvas>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg">
+            <h4>Operator Satu</h4>
+          </div>
+          <div class="col-lg">
+            <h4>Operator Dua</h4>
+          </div>
+        </div>
+        <hr />
+        <div class="row mt-5">
+          <div class="col-lg">
+            <canvas id="total-income-pie"></canvas>
+          </div>
+          <div class="col-lg pt-5">
+            <h3 id="total-biaya"></h3>
+            <h3 id="total-durasi"></h3>
+            <h3 id="total-kendaraan"></h3>
+          </div>
+        </div>
+        <div class="row">
+          <h4>Total Income</h4>
+        </div>
+      </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <script type="module" src="./js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+      integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+      integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
