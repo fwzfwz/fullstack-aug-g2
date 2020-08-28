@@ -1,0 +1,187 @@
+body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+  }
+
+header {
+    padding: 0 100px;
+    height: 50px;
+    background-color: #2c3f4d;
+}
+
+.fullname {
+    font-size: 25px;
+}
+
+.title {
+    font-size: 17px;
+}
+
+ul {
+    margin: 0;
+    display: inline-block;
+  }
+ul li {
+    padding: 15px 10px;
+    display: inline-block;
+    color: white;
+  }
+ul li:hover {
+    color: white;
+    background-color: #425b6d;
+  }
+
+.about-page {
+    display: block;
+    box-shadow: 0px 0px 23px 0px rgba(0,0,0,0.75);
+    margin: 50px auto;
+    width: 50%;
+}
+
+.top {
+    display: flex;
+    flex-direction: row;
+}
+
+.top .left {
+    width: 40%;
+    background-color: #2c3f4d;
+    padding: 10px;
+}
+
+.top .right {
+    padding: 10px;
+    box-shadow: -5px 0px 4px -4px rgba(0,0,0,0.60)
+}
+
+.profile-pic {
+    border-radius: 50%;
+}
+
+.contact-banner {
+    display: flex;
+    flex-direction: row;
+    height: 25px;
+    background-color: #f7b614;
+    padding: 5px 50px;
+}
+
+.contact-section img {
+    display: inline-block;
+    height: 100%;
+}
+
+.contact-section p {
+    font-size: 13px;
+    display: inline-block;
+}
+
+.contact-section {
+    margin: 0 20px;
+    height: 100%;
+    padding: auto 0;
+}
+
+.history {
+    display: flex;
+    flex-direction: row;
+}
+
+.history .left {
+    width: 43%;
+    color: whitesmoke;
+    background-color: #2c3f4d;
+    padding: 10px;
+}
+
+.history .right {
+    width: 57%;
+    padding: 10px;
+}
+
+.edu {
+    padding: 10px 0;
+}
+
+.edu h2 {
+    margin: 10px 0;
+    font-size: 27px;
+}
+.edu h3 {
+    margin: 3px 7px;
+    font-size: 17px;
+}
+.edu h5 {
+    margin: 0 7px;
+    font-size: 12px;
+}
+
+.edu .section {
+    margin: 5px 0;
+}
+
+.skill {
+    padding: 10px 0;
+}
+
+.skill h2 {
+    margin: 10px 0;
+    font-size: 27px;
+}
+
+.skill h4 {
+    font-size: 17px;
+}
+
+.skill .section {
+    display: flex;
+    margin: 5px 0;
+}
+
+.skillset {
+    margin-left: 7px;
+    width: 30%;
+}
+
+.biography h2 {
+    padding: 20px 0;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.biography p {
+    font-size: 15px;
+}
+
+.experience h2 {
+    padding: 20px 0;
+    font-size: 22px;
+}
+
+hr {
+    margin: 20px 0;
+}
+
+.experience .section {
+    display: flex;
+    border-radius: 10px;
+    background-color: rgb(247, 182, 20);
+    padding: 5px;
+    margin: 10px 0;
+}
+
+.experience h4 {
+    margin-top: 2px;
+    margin-bottom: 2px;
+    margin-right: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.company h4 {
+    font-weight: bold;
+}
+
+.company h5 {
+    margin: 5px 0;
+    font-size: 13px;
+}
