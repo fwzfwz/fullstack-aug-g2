@@ -1,0 +1,11 @@
+HR Management :
+*Login Page
+*HRD Page
+-Input Karyawan
+-List Karyawan
+-Input Departement
+-List Departement
+-Assign Departement
+-Karyawan CV
+*Karyawan Page
+-Karyawan CV Page
