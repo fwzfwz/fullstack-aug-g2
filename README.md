@@ -10,7 +10,7 @@ Commuting App that display which transit to be avoided & realtime position of th
 
 - Record Every Card That Tapped In & Out On The Machine
 
-  - ![Record Passenger Diagram](./record-passenger-card.png)
+  - ![Record Passenger Diagram](https://raw.githubusercontent.com/fwzfwz/fullstack-aug-g2/day13-analisis-masalah/record-passenger-card.PNG)
 
   - ## **passenger table**
     - passenger_id (random varchar)
@@ -24,7 +24,7 @@ Commuting App that display which transit to be avoided & realtime position of th
 
 - Count How Many Passenger On The Bus
 
-  - ![Bus Ratio Diagram](./bus-ratio.png)
+  - ![Bus Ratio Diagram](https://raw.githubusercontent.com/fwzfwz/fullstack-aug-g2/day13-analisis-masalah/bus-ratio.PNG)
 
   - ## **Algorithm**
 
@@ -37,7 +37,7 @@ Commuting App that display which transit to be avoided & realtime position of th
 
 - Calculate How Crowded The Stop
 
-  - ![Crowded Stop Diagram](./crowded-stop.png)
+  - ![Crowded Stop Diagram](https://raw.githubusercontent.com/fwzfwz/fullstack-aug-g2/day13-analisis-masalah/crowded-stop.PNG)
 
   - ## **Algorithm**
 
@@ -48,7 +48,7 @@ Commuting App that display which transit to be avoided & realtime position of th
 
 - Display Stop Recomendation
 
-  -![Stop Recomendation](./get-stop-recomendation.png)
+  -![Stop Recomendation](https://raw.githubusercontent.com/fwzfwz/fullstack-aug-g2/day13-analisis-masalah/get-stop-recomendation.PNG)
 
   - ## **Algorithm**
 
@@ -59,11 +59,11 @@ Commuting App that display which transit to be avoided & realtime position of th
 
 ### User Interface
 
-![User Interface](./commute-frame-png.png)
+![User Interface](https://raw.githubusercontent.com/fwzfwz/fullstack-aug-g2/day13-analisis-masalah/commute-frame-png.PNG)
 
 ### Database Diagram
 
-![DB Diagram](./db-diagram-png.png)
+![DB Diagram](https://raw.githubusercontent.com/fwzfwz/fullstack-aug-g2/day13-analisis-masalah/db-diagram-png.png)
 
 ### Link(s)
 
