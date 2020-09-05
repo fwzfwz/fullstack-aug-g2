@@ -72,7 +72,6 @@ const Login = props => {
                 'loggedKaryawan',
                 JSON.stringify(karyawanData)
               );
-              alert(karyawanData);
             });
           history.replace('/cv');
         } else {
@@ -89,7 +88,7 @@ const Login = props => {
           <Form.Label>Username</Form.Label>
           <Form.Control
             type="number"
-            placeholder="Username"
+            placeholder="Admin Username: 73897725 (Development Only)"
             name="username"
             onChange={el => setUsername(el.target.value)}
           />
@@ -99,7 +98,7 @@ const Login = props => {
           <Form.Label>Password</Form.Label>
           <Form.Control
             type="password"
-            placeholder="Password"
+            placeholder="Admin Password: 73897725 (Development only)"
             name="password"
             onChange={el => setPassword(el.target.value)}
           />
@@ -123,5 +122,3 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
-
-//73897725

@@ -20,7 +20,6 @@ const setKaryawan = () => {
         });
       });
     dispatch(setKaryawans(karyawanList));
-    console.log('state: ', getState());
   };
 };
 

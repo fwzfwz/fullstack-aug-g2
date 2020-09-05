@@ -18,7 +18,7 @@ const Header = props => {
     props.logoutKaryawan();
     localStorage.setItem('loggedUser', null);
     localStorage.setItem('loggedKaryawan', null);
-    window.location.reload();
+    history.replace('/');
   };
 
   return (

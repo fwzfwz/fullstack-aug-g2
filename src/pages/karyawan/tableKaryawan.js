@@ -22,7 +22,6 @@ const TableKaryawan = props => {
       </thead>
       <tbody>
         {props.karyawans.map(karyawan => {
-          console.log('adasdad', karyawan);
           return (
             <tr key={karyawan.id}>
               <th>{karyawan.nip}</th>
