@@ -1,14 +1,12 @@
-const initialState = {
-  error: 'NO LOGIN',
-};
-
-const LoginReducer = (state = initialState, action) => {
+const AuthReducer = (state = {}, action) => {
   switch (action.type) {
     case 'LOGIN':
       return action.payload;
     case 'LOGOUT':
+      return {};
+    default:
       return state;
   }
 };
 
-export default LoginReducer;
+export default AuthReducer;

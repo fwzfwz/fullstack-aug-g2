@@ -1,55 +1,52 @@
 import React, { useState, useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
-import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import db from '../../config/firebase';
+import { connect } from 'react-redux';
 
 const StudentModify = props => {
   const [name, setName] = useState('');
   const [motto, setMotto] = useState('');
-  const [github, setGithub] = useState('');
-  const [imgUrl, setImgUrl] = useState('');
+  const [github_url, setGithub] = useState('');
+  const [img_url, setImgUrl] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const history = useHistory();
-  const location = useLocation();
+  const { studentId } = useParams();
 
   useEffect(() => {
-    if (props.user() === null) {
-      history.replace('/student');
-    } else {
-      if (location.studentId !== 'add') {
-        let student = props
-          .students()
-          .filter(s => s.id === location.studentId)[0];
-
-        setName(student.name);
-        setMotto(student.motto);
-        setGithub(student.github);
-        setImgUrl(student.imgUrl);
-        setUsername(student.username);
-        setPassword(student.password);
-      }
+    if (studentId !== 'add') {
+      db.collection('students')
+        .doc(studentId)
+        .get()
+        .then(s => s.data())
+        .then(student => {
+          setName(student.name);
+          setMotto(student.motto);
+          setGithub(student.github_url);
+          setImgUrl(student.img_url);
+          setUsername(student.username);
+          setPassword(student.password);
+        });
     }
-  }, []);
+  }, [studentId]);
 
   const handleSubmit = e => {
     e.preventDefault();
-    let studentObj = {
-      id: location.studentId !== 'add' ? location.studentId : username,
-      name: name,
-      motto: motto,
-      github: github,
-      imgUrl: imgUrl,
-      username: username,
-      password: password,
-    };
-    if (location.studentId !== 'add') {
-      props.editStudent(location.studentId, studentObj);
+    let studentObj = { name, motto, github_url, img_url, username, password };
+    if (studentId !== 'add') {
+      db.collection('students')
+        .doc(studentId)
+        .set(studentObj)
+        .then(() => console.log(`Student ${studentId} Updated`))
+        .catch(error => console.error(`Error ${error}`));
     } else {
-      props.addStudent(studentObj);
+      db.collection('students')
+        .add(studentObj)
+        .then(student => console.log(`Student ${student.id} Created`))
+        .catch(error => console.error(`Error ${error}`));
     }
   };
 
@@ -77,7 +74,7 @@ const StudentModify = props => {
             <Form.Label>Github URL</Form.Label>
             <Form.Control
               placeholder="Github Student"
-              value={github}
+              value={github_url}
               onChange={e => setGithub(e.target.value)}
             />
           </Form.Group>
@@ -85,7 +82,7 @@ const StudentModify = props => {
             <Form.Label>Image URL</Form.Label>
             <Form.Control
               placeholder="Image Student"
-              value={imgUrl}
+              value={img_url}
               onChange={e => setImgUrl(e.target.value)}
             />
           </Form.Group>
@@ -115,4 +112,8 @@ const StudentModify = props => {
   );
 };
 
-export default StudentModify;
+const mapStateToProps = state => ({
+  loggedUser: state.loggedUser,
+});
+
+export default connect(mapStateToProps)(StudentModify);

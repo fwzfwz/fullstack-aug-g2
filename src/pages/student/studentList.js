@@ -1,18 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { Link, useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
+import db from '../../config/firebase';
 
 const StudentList = props => {
   const [isEdit, setIsEdit] = useState(false);
+  const [students, setStudents] = useState([]);
   const history = useHistory();
-  // const isExist = props.user() !== null;
+
+  const getStudentsFromDb = async () => {
+    let sss = [];
+    db.collection('students')
+      .get()
+      .then(ss => {
+        ss.forEach(s => {
+          let student = s.data();
+          student.id = s.id;
+          sss.push(student);
+        });
+        setStudents(sss);
+      })
+      .catch(error => {
+        console.error(`Error ${error}`);
+      });
+  };
+
+  useEffect(() => {
+    getStudentsFromDb();
+  }, []);
+
+  useEffect(() => {
+    if (Object.keys(props.loggedUser).length <= 1) {
+      history.replace('/');
+    }
+  });
+
+  const deleteStudentFromDb = studentId => {
+    db.collection('students')
+      .doc(studentId)
+      .delete()
+      .then(() => console.log('Deleted'))
+      .catch(() => console.log('Error Delete'));
+    window.location.reload();
+  };
 
   return (
     <div className="w-75 mx-auto">
-      {props.user() !== null ? (
+      {props.loggedUser !== null ? (
         <>
-          {props.user().id === 'admin' ? (
+          {props.loggedUser.username === 'admin' ? (
             <Link
               to={{
                 pathname: `/student/add`,
@@ -33,18 +71,17 @@ const StudentList = props => {
         </Link>
       )}
       <div className="d-flex flex-wrap flex-row bd-highlight">
-        {props.user().id === 'admin'
-          ? props
-              .students()
-              .filter(student => student.id !== 'admin')
+        {props.loggedUser.username !== 'admin'
+          ? students
+              .filter(student => student.username === props.loggedUser.username)
               .map(student => {
                 return (
                   <Card
                     style={{ width: '18rem' }}
                     className="mx-4 my-2"
-                    key={student.id}
+                    key={student.username}
                   >
-                    <Card.Img variant="top" src={student.imgUrl} />
+                    <Card.Img variant="top" src={student.img_url} />
                     <Card.Body>
                       <Card.Title>{student.name}</Card.Title>
                       <Card.Text>{student.motto}</Card.Text>
@@ -61,7 +98,7 @@ const StudentList = props => {
                           </Link>
                           <Button
                             variant="danger"
-                            onClick={() => props.deleteStudent(student.id)}
+                            onClick={() => deleteStudentFromDb(student.id)}
                           >
                             Delete {student.username}
                           </Button>
@@ -71,6 +108,7 @@ const StudentList = props => {
                           href={student.github}
                           target="_blank"
                           className="btn btn-primary"
+                          rel="noopener noreferrer"
                         >
                           Github
                         </a>
@@ -79,17 +117,16 @@ const StudentList = props => {
                   </Card>
                 );
               })
-          : props
-              .students()
-              .filter(student => student.id === props.user().id)
+          : students
+              .filter(student => student.username !== 'admin')
               .map(student => {
                 return (
                   <Card
                     style={{ width: '18rem' }}
                     className="mx-4 my-2"
-                    key={student.id}
+                    key={student.username}
                   >
-                    <Card.Img variant="top" src={student.imgUrl} />
+                    <Card.Img variant="top" src={student.img_url} />
                     <Card.Body>
                       <Card.Title>{student.name}</Card.Title>
                       <Card.Text>{student.motto}</Card.Text>
@@ -106,7 +143,7 @@ const StudentList = props => {
                           </Link>
                           <Button
                             variant="danger"
-                            onClick={() => props.deleteStudent(student.id)}
+                            onClick={() => deleteStudentFromDb(student.id)}
                           >
                             Delete {student.username}
                           </Button>
@@ -116,6 +153,7 @@ const StudentList = props => {
                           href={student.github}
                           target="_blank"
                           className="btn btn-primary"
+                          rel="noopener noreferrer"
                         >
                           Github
                         </a>
@@ -129,4 +167,8 @@ const StudentList = props => {
   );
 };
 
-export default StudentList;
+const mapStateToProps = state => ({
+  loggedUser: state.loggedUser,
+});
+
+export default connect(mapStateToProps)(StudentList);

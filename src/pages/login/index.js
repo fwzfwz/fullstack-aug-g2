@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { Redirect, useHistory, Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { setLogin } from '../../action/auth';
+import db from '../../config/firebase';
 
 const Login = props => {
   const [username, setUsername] = useState('');
@@ -9,14 +12,29 @@ const Login = props => {
   const history = useHistory();
 
   useEffect(() => {
-    if (props.user() !== null) {
+    if (Object.keys(props.loggedUser).length > 1) {
       history.replace('/student');
     }
-  }, [props.user()]);
+  });
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    props.handleLogin(username, password);
+    await db
+      .collection('students')
+      .where('username', '==', username)
+      .where('password', '==', password)
+      .get()
+      .then(students => {
+        if (!students.empty) {
+          students.forEach(student => {
+            props.login(student.data());
+          });
+          history.push('/student');
+        } else {
+          alert('User Not Found');
+        }
+      })
+      .catch(error => console.error(`Error ${error}`));
   };
 
   return (
@@ -49,4 +67,12 @@ const Login = props => {
   );
 };
 
-export default Login;
+const mapStateToProps = state => ({
+  loggedUser: state.loggedUser,
+});
+
+const mapDispatchToProps = dispatch => ({
+  login: payload => dispatch(setLogin(payload)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

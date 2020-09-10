@@ -1,8 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Navbar, Nav, Form, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { setLogout } from '../action/auth';
 
 const Header = props => {
+  const history = useHistory();
+
   return (
     <Navbar bg="dark" variant="dark">
       <Navbar.Brand>
@@ -15,10 +19,27 @@ const Header = props => {
       </Navbar.Brand>
       <Nav className="mr-auto"></Nav>
       <Form inline>
-        {props.user() !== null ? <Button onClick={() => props.handleLogout()}>Log Out</Button> : null}
+        {Object.keys(props.loggedUser).length > 1 ? (
+          <Button
+            onClick={() => {
+              props.logout();
+              history.replace('/');
+            }}
+          >
+            Log Out
+          </Button>
+        ) : null}
       </Form>
     </Navbar>
   );
 };
 
-export default Header;
+const mapStateToProps = state => ({
+  loggedUser: state.loggedUser,
+});
+
+const mapDispatchToProps = dispatch => ({
+  logout: () => dispatch(setLogout()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
