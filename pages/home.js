@@ -76,7 +76,19 @@ const Home = ({navigation, route}) => {
             padding: 10,
             alignItems: 'center',
           }}
-          onPress={() => navigation.navigate('Add New')}>
+          onPress={() => navigation.navigate('Album List')}>
+          <Text style={{color: 'white'}}>Go To Album Page -></Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            marginHorizontal: 10,
+            marginBottom: 10,
+            borderRadius: 1000,
+            backgroundColor: '#007bff',
+            padding: 10,
+            alignItems: 'center',
+          }}
+          onPress={() => navigation.navigate('Input Page')}>
           <Text style={{color: 'white'}}>Add New +</Text>
         </TouchableOpacity>
       </View>
@@ -86,7 +98,7 @@ const Home = ({navigation, route}) => {
             key={l.id}
             bottomDivider
             onPress={() => {
-              navigation.navigate('Add New', {data: l});
+              navigation.navigate('Input Page', {data: l});
             }}>
             <Avatar source={{uri: l.imgUrl}} />
             <ListItem.Content>

@@ -5,6 +5,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import Login from './pages/login';
 import Home from './pages/home';
 import AddList from './pages/addList';
+import AlbumScreen from './pages/album';
 
 const App = () => {
   const Stack = createStackNavigator();
@@ -18,7 +19,8 @@ const App = () => {
           options={{headerShown: false}}
         />
         <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="Add New" component={AddList} />
+        <Stack.Screen name="Input Page" component={AddList} />
+        <Stack.Screen name="Album List" component={AlbumScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
