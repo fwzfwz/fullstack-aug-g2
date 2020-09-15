@@ -5,7 +5,7 @@ import axios from 'axios';
 function Item({item, navigation}) {
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate('Photo List', item)}
+      onPress={() => navigation.navigate('PHOTOPAGE', item)}
       style={{
         padding: 10,
       }}>

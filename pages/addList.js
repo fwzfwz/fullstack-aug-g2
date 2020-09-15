@@ -50,7 +50,7 @@ const AddList = ({navigation, route}) => {
             data.name = name;
             data.imgUrl = imgUrl;
             data.subtitle = subtitle;
-            navigation.navigate('Home', {
+            navigation.navigate('HOMEPAGE', {
               data,
               isAdd: false,
             });
@@ -59,7 +59,7 @@ const AddList = ({navigation, route}) => {
             data.name = name;
             data.imgUrl = imgUrl;
             data.subtitle = subtitle;
-            navigation.navigate('Home', {
+            navigation.navigate('HOMEPAGE', {
               data,
               isAdd: true,
             });

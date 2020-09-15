@@ -2,8 +2,10 @@ import React, {useState, useEffect} from 'react';
 import {View, ScrollView, TouchableOpacity, Text} from 'react-native';
 import {ListItem, Avatar} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/AntDesign';
+import {setLogout} from '../redux/authAction';
+import {connect} from 'react-redux';
 
-const Home = ({navigation, route}) => {
+const Home = ({navigation, route, logout}) => {
   const [entries, setEntries] = useState([
     {
       id: 1,
@@ -28,9 +30,6 @@ const Home = ({navigation, route}) => {
         editImage(route.params.data.id, route.params.data);
       }
     }
-    console.log(route.params?.data);
-    console.log(route.params?.isAdd);
-    console.log(entries);
   }, [route.params?.data]);
 
   const addImage = (data) => {
@@ -72,34 +71,17 @@ const Home = ({navigation, route}) => {
             marginHorizontal: 10,
             marginBottom: 10,
             borderRadius: 1000,
-            backgroundColor: '#007bff',
+            backgroundColor: 'red',
             padding: 10,
             alignItems: 'center',
           }}
-          onPress={() => navigation.navigate('Album List')}>
-          <Text style={{color: 'white'}}>Go To Album Page -></Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={{
-            marginHorizontal: 10,
-            marginBottom: 10,
-            borderRadius: 1000,
-            backgroundColor: '#007bff',
-            padding: 10,
-            alignItems: 'center',
-          }}
-          onPress={() => navigation.navigate('Input Page')}>
-          <Text style={{color: 'white'}}>Add New +</Text>
+          onPress={() => logout()}>
+          <Text style={{color: 'white'}}>LOGOUT</Text>
         </TouchableOpacity>
       </View>
       <ScrollView>
         {entries.map((l) => (
-          <ListItem
-            key={l.id}
-            bottomDivider
-            onPress={() => {
-              navigation.navigate('Input Page', {data: l});
-            }}>
+          <ListItem key={l.id} bottomDivider onPress={() => console.log(l)}>
             <Avatar source={{uri: l.imgUrl}} />
             <ListItem.Content>
               <ListItem.Title>{l.name}</ListItem.Title>
@@ -115,4 +97,10 @@ const Home = ({navigation, route}) => {
   );
 };
 
-export default Home;
+function mapDispatchToProps(dispatch) {
+  return {
+    logout: () => dispatch(setLogout()),
+  };
+}
+
+export default connect(null, mapDispatchToProps)(Home);

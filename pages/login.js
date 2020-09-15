@@ -2,8 +2,10 @@ import React from 'react';
 import {View, Button, StyleSheet} from 'react-native';
 import {Input} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {setLogin} from '../redux/authAction';
+import {connect} from 'react-redux';
 
-const Login = ({navigation}) => {
+const Login = ({login}) => {
   const inputIcon = <Icon name="vcard-o" size={20} />;
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -26,7 +28,7 @@ const Login = ({navigation}) => {
         buttonStyle={styles.buttonStyle}
         onPress={() => {
           if (username === 'ADMIN' && password === 'ADMIN') {
-            navigation.navigate('Home');
+            login();
           } else {
             alert('ADMIN && ADMIN');
           }
@@ -50,4 +52,10 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Login;
+function mapDispatchToProps(dispatch) {
+  return {
+    login: () => dispatch(setLogin()),
+  };
+}
+
+export default connect(null, mapDispatchToProps)(Login);
