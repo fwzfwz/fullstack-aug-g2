@@ -1,124 +1,70 @@
-import React from 'react';
-import {FlatList, ScrollView, TouchableOpacity, Text} from 'react-native';
-import {Avatar, ListItem} from 'react-native-elements';
+import React, {useMemo} from 'react';
+import {FlatList, TouchableOpacity, Text, RefreshControl} from 'react-native';
+import axios from 'axios';
 
-function AlbumScreen() {
+function Item({item, navigation}) {
+  return (
+    <TouchableOpacity
+      onPress={() => navigation.navigate('Photo List', item)}
+      style={{
+        padding: 10,
+      }}>
+      <Text>{item.title}</Text>
+    </TouchableOpacity>
+  );
+}
+
+function AlbumScreen({navigation}) {
   const [isLoading, setLoading] = React.useState(true);
   const [data, setData] = React.useState([]);
   const [currentPage, setCurrentPage] = React.useState(1);
 
-  const [albumId, setAlbumId] = React.useState('');
-  const [filteredData, setFilteredData] = React.useState('');
-
-  const [pageItem, setPageItem] = React.useState(10);
-
-  const [pages, setPages] = React.useState([1, 2, 3, 4, 5]);
+  const memoizedList = useMemo(() => renderItems, [data]);
 
   React.useEffect(() => {
-    const startIndex = currentPage * pageItem - pageItem;
-    if (!albumId) {
-      fetch(
-        `http://jsonplaceholder.typicode.com/albums?_start=${startIndex}&_limit=${pageItem}`,
+    axios
+      .get(
+        `http://jsonplaceholder.typicode.com/albums?_start=${
+          currentPage * 30 - 29
+        }&_limit=30`,
       )
-        .then((res) => res.json())
-        .then((json) => setData(json))
-        .catch((error) => console.error(error))
-        .finally(() => setLoading(false));
-    } else if (albumId) {
-      fetch(
-        `https://jsonplaceholder.typicode.com/photos?albumId=${albumId}&_start=${startIndex}&_limit=${pageItem}`,
-      )
-        .then((res) => res.json())
-        .then((json) => setFilteredData(json))
-        .catch((error) => console.error(error))
-        .finally(() => setLoading(false));
-    }
-  }, [currentPage, pageItem, albumId]);
+      .then((resp) => setData((data) => [...data, ...resp.data]))
+      .catch((err) => console.error(err))
+      .then(() => setLoading(false));
+  }, [currentPage]);
 
-  function Item({item, onPress, isActive}) {
-    return (
-      <TouchableOpacity
-        onPress={onPress}
-        style={{
-          paddingVertical: 15,
-          paddingHorizontal: 20,
-          marginVertical: 10,
-          marginHorizontal: 15,
-          backgroundColor: isActive ? '#007BFF' : 'white',
-        }}>
-        <Text style={{color: isActive ? 'white' : '#007BFF'}}>{item}</Text>
-      </TouchableOpacity>
-    );
+  function loadMore() {
+    setCurrentPage(currentPage + 1 * 30 - 29);
   }
 
-  function handleChangePage(item) {
-    setCurrentPage(item);
-    setPages((pages) =>
-      pages.map((page) => {
-        if (currentPage < item) {
-          return page + (item - currentPage);
-        } else if (currentPage > item || currentPage === item) {
-          return page - 1;
-        }
-      }),
-    );
+  function renderItems({item}) {
+    return <Item item={item} navigation={navigation} />;
   }
 
   return (
     <>
       {isLoading ? (
         <Text>ODADING</Text>
-      ) : filteredData ? (
-        <ScrollView>
-          {filteredData.map((l, i) => (
-            <ListItem key={i} bottomDivider>
-              <Avatar source={{uri: l.thumbnailUrl}} />
-              <ListItem.Content>
-                <ListItem.Title>{l.title}</ListItem.Title>
-              </ListItem.Content>
-            </ListItem>
-          ))}
-          <FlatList
-            horizontal={true}
-            data={pages}
-            renderItem={({item}) => (
-              <Item
-                item={item}
-                onPress={() => handleChangePage(item)}
-                isActive={item === currentPage ? true : false}
-              />
-            )}
-            keyExtractor={(item) => 'page' + item}
-          />
-        </ScrollView>
       ) : (
-        <ScrollView>
-          {data.map((item) => (
-            <ListItem
-              key={item.id}
-              onPress={() => {
+        <FlatList
+          data={data}
+          renderItem={memoizedList}
+          keyExtractor={(item) =>
+            (Math.random().toString() + item.id).toString()
+          }
+          onEndReached={loadMore}
+          onEndReachedThreshold={0.2}
+          refreshControl={
+            <RefreshControl
+              refreshing={isLoading}
+              onRefresh={() => {
                 setLoading(true);
-                setAlbumId(item.id);
+                setCurrentPage(1);
+                setLoading(false);
               }}
-              bottomDivider
-              horizontal>
-              <Text>{item.title}</Text>
-            </ListItem>
-          ))}
-          <FlatList
-            horizontal={true}
-            data={pages}
-            renderItem={({item}) => (
-              <Item
-                item={item}
-                onPress={() => handleChangePage(item)}
-                isActive={item === currentPage ? true : false}
-              />
-            )}
-            keyExtractor={(item) => 'page' + item}
-            keyExtractor={(item) => 'page' + item}
-          />
-        </ScrollView>
+            />
+          }
+        />
       )}
     </>
   );
