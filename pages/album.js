@@ -5,7 +5,7 @@ import axios from 'axios';
 function Item({item, navigation}) {
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate('Photo List', item)}
+      onPress={() => navigation.navigate('PHOTOPAGE', item)}
       style={{
         padding: 10,
       }}>
@@ -53,7 +53,7 @@ function AlbumScreen({navigation}) {
             (Math.random().toString() + item.id).toString()
           }
           onEndReached={loadMore}
-          onEndReachedThreshold={0.2}
+          onEndReachedThreshold={0.4}
           refreshControl={
             <RefreshControl
               refreshing={isLoading}

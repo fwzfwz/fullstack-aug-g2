@@ -1,31 +1,36 @@
 import React from 'react';
-import 'react-native-gesture-handler';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import Login from './pages/login';
-import Home from './pages/home';
-import AddList from './pages/addList';
-import AlbumScreen from './pages/album';
-import Photos from './pages/photos';
+import Wrapper from './pages/wrapper';
+import {connect} from 'react-redux';
 
-const App = () => {
-  const Stack = createStackNavigator();
+const Stack = createStackNavigator();
 
+const App = ({auth}) => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen
-          name="Login"
-          component={Login}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="Input Page" component={AddList} />
-        <Stack.Screen name="Album List" component={AlbumScreen} />
-        <Stack.Screen name="Photo List" component={Photos} />
+        {auth.isLoggedIn ? (
+          <Stack.Screen
+            name="Wrapper"
+            component={Wrapper}
+            options={{headerShown: false}}
+          />
+        ) : (
+          <Stack.Screen
+            name="Login"
+            component={Login}
+            options={{headerShown: false}}
+          />
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );
 };
 
-export default App;
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps)(App);
