@@ -4,6 +4,9 @@ import {ListItem, Avatar} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {setLogout} from '../redux/authAction';
 import {connect} from 'react-redux';
+import db from '../db';
+
+const testtt = () => console.log(db('SELECT * FROM users', []));
 
 const Home = ({navigation, route, logout}) => {
   const [entries, setEntries] = useState([

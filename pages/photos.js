@@ -1,7 +1,31 @@
 import React from 'react';
-import {FlatList, RefreshControl, Text, Image, View} from 'react-native';
+import {
+  FlatList,
+  RefreshControl,
+  Text,
+  Image,
+  View,
+  AsyncStorage,
+} from 'react-native';
 import {Avatar, ListItem, Overlay} from 'react-native-elements';
 import axios from 'axios';
+
+const getItemFromStorage = async (key) => {
+  try {
+    const value = await AsyncStorage.getItem(key);
+    return JSON.parse(value);
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+const setItemToStorage = async (key, data) => {
+  try {
+    await AsyncStorage.setItem(key, JSON.stringify(data));
+  } catch (err) {
+    console.error(err);
+  }
+};
 
 function Photos({navigation, route}) {
   const [isLoading, setLoading] = React.useState(true);
@@ -17,7 +41,10 @@ function Photos({navigation, route}) {
         .get(
           `https://jsonplaceholder.typicode.com/photos/?albumId=${route.params.id}`,
         )
-        .then((resp) => setData(resp.data))
+        .then((resp) => {
+          setItemToStorage('PhotoList', resp.data);
+          getItemFromStorage('PhotoList').then((photos) => setData(photos));
+        })
         .catch((err) => console.error(err))
         .then(setLoading(false));
     }

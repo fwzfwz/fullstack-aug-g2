@@ -1,6 +1,7 @@
 import React, {useMemo} from 'react';
 import {FlatList, TouchableOpacity, Text, RefreshControl} from 'react-native';
 import axios from 'axios';
+import {AsyncStorage} from 'react-native';
 
 function Item({item, navigation}) {
   return (
@@ -13,6 +14,23 @@ function Item({item, navigation}) {
     </TouchableOpacity>
   );
 }
+
+const _retrieveData = async (key) => {
+  try {
+    const value = await AsyncStorage.getItem(key);
+    return JSON.parse(value);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const _storeData = async (key, value) => {
+  try {
+    await AsyncStorage.setItem(key, JSON.stringify(value));
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 function AlbumScreen({navigation}) {
   const [isLoading, setLoading] = React.useState(true);
@@ -28,7 +46,12 @@ function AlbumScreen({navigation}) {
           currentPage * 30 - 29
         }&_limit=30`,
       )
-      .then((resp) => setData((data) => [...data, ...resp.data]))
+      .then((resp) => {
+        _storeData('AlbumList', resp.data);
+        _retrieveData('AlbumList').then((album) =>
+          setData((data) => [...data, ...album]),
+        );
+      })
       .catch((err) => console.error(err))
       .then(() => setLoading(false));
   }, [currentPage]);

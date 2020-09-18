@@ -4,6 +4,16 @@ import {Input} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {setLogin} from '../redux/authAction';
 import {connect} from 'react-redux';
+import executeQuery from '../db';
+
+const getUser = async (username, password) => {
+  let users = await executeQuery(
+    'SELECT * FROM users WHERE username = ? AND password = ?',
+    [username.toString(), password.toString()],
+  );
+  let rows = users.rows;
+  return rows.item(0);
+};
 
 const Login = ({login}) => {
   const inputIcon = <Icon name="vcard-o" size={20} />;
@@ -27,11 +37,13 @@ const Login = ({login}) => {
         title="LOGIN"
         buttonStyle={styles.buttonStyle}
         onPress={() => {
-          if (username === 'ADMIN' && password === 'ADMIN') {
-            login();
-          } else {
-            alert('ADMIN && ADMIN');
-          }
+          getUser(username, password).then((resp) => {
+            if (resp) {
+              login();
+            } else {
+              alert('user1 && pw1');
+            }
+          });
         }}
       />
     </View>
