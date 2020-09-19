@@ -23,12 +23,12 @@ const Login = ({login}) => {
   return (
     <View style={styles.container}>
       <Input
-        placeholder="Username"
+        placeholder="Username: user1"
         leftIcon={inputIcon}
         onChangeText={(text) => setUsername(text)}
       />
       <Input
-        placeholder="Password"
+        placeholder="Password: pw1"
         leftIcon={inputIcon}
         secureTextEntry={true}
         onChangeText={(text) => setPassword(text)}
@@ -41,7 +41,7 @@ const Login = ({login}) => {
             if (resp) {
               login();
             } else {
-              alert('user1 && pw1');
+              alert('User Not Found');
             }
           });
         }}

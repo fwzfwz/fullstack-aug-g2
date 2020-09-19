@@ -1,29 +1,26 @@
 import React from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
+import {Assets, createStackNavigator} from '@react-navigation/stack';
 import Home from './home';
 import AddList from './addList';
 import {Text} from 'react-native';
 
-const Drawer = createDrawerNavigator();
-
-function Dummy() {
-  return <Text>Dummy Text</Text>;
-}
+const Stack = createStackNavigator();
 
 function HomeWrapper() {
   return (
-    <Drawer.Navigator>
-      <Drawer.Screen
+    <Stack.Navigator>
+      <Stack.Screen
         name="HOMEPAGE"
         component={Home}
-        options={{drawerLabel: 'Home'}}
+        options={{headerTitle: 'Home Page'}}
       />
-      <Drawer.Screen
+      <Stack.Screen
         name="INPUTPAGE"
-        component={Dummy}
-        options={{drawerLabel: 'Dummy'}}
+        component={AddList}
+        options={{headerTitle: "Input Page"}}
       />
-    </Drawer.Navigator>
+    </Stack.Navigator>
   );
 }
 

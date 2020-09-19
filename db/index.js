@@ -5,7 +5,6 @@ SQLite.DEBUG(true);
 const db = SQLite.openDatabase(
   {
     name: 'SQLite',
-    createFromLocation: '~SQLite.db',
   },
   () => console.log('con opened'),
   (error) => {
@@ -24,15 +23,23 @@ const executeQuery = (sql, params = []) =>
         },
         (error) => {
           reject(error);
+          console.error(error);
         },
       );
     });
   });
 
-// executeQuery('CREATE TABLE IF NOT EXISTS users (username, password)', []);
-// executeQuery('INSERT INTO dbo.users (username, password) VALUES (?, ?)', [
-//   'user1'.toString(),
-//   'pw1'.toString(),
-// ]);
+// executeQuery('DROP TABLE IF EXISTS users');
+// executeQuery(
+//   'CREATE TABLE users (user_id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT NOT NULL, password TEXT NOT NULL, img_url TEXT NOT NULL)',
+// );
+// executeQuery(
+//   'INSERT INTO users (username, password, img_url) VALUES (?, ?, ?)',
+//   [
+//     'user1',
+//     'pw1',
+//     'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+//   ],
+// );
 
 export default executeQuery;

@@ -1,67 +1,62 @@
 import React, {useState, useEffect} from 'react';
-import {View, ScrollView, TouchableOpacity, Text} from 'react-native';
+import {
+  View,
+  TouchableOpacity,
+  Text,
+  ActivityIndicator,
+  Alert,
+  StyleSheet,
+} from 'react-native';
 import {ListItem, Avatar} from 'react-native-elements';
-import Icon from 'react-native-vector-icons/AntDesign';
 import {setLogout} from '../redux/authAction';
 import {connect} from 'react-redux';
-import db from '../db';
-
-const testtt = () => console.log(db('SELECT * FROM users', []));
+import executeQuery from '../db';
+import {useIsFocused} from '@react-navigation/native';
+import {FlatList} from 'react-native-gesture-handler';
 
 const Home = ({navigation, route, logout}) => {
-  const [entries, setEntries] = useState([
-    {
-      id: 1,
-      name: 'Amy Farha',
-      imgUrl: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-      subtitle: 'Vice President',
-    },
-    {
-      id: 2,
-      name: 'Chris Jackson',
-      imgUrl:
-        'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-      subtitle: 'Vice Chairman',
-    },
-  ]);
+  const isFocused = useIsFocused();
+  const [isLoading, setLoading] = useState(true);
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    if (route.params) {
-      if (route.params.isAdd) {
-        addImage(route.params?.data);
-      } else {
-        editImage(route.params.data.id, route.params.data);
-      }
+    if (isFocused) {
+      getUsers();
     }
-  }, [route.params?.data]);
+  }, [isFocused]);
 
-  const addImage = (data) => {
-    let oldEntry = entries;
-    oldEntry.push({
-      id: Math.floor(Math.random() * 100) + 1,
-      name: data.name,
-      imgUrl: data.imgUrl,
-      subtitle: data.subtitle,
+  const getUsers = async () => {
+    let temp = [];
+    await executeQuery('SELECT * FROM users').then((resp) => {
+      for (let i = 0; i < resp.rows.length; i++) {
+        temp.push(resp.rows.item(i));
+      }
     });
-    setEntries(oldEntry);
+    await setUsers(temp);
+    setLoading(false);
   };
 
-  const editImage = (imageId, data) => {
-    setEntries(
-      entries.map((entry) => {
-        if (entry.id === imageId) {
-          entry = data;
-          return entry;
-        } else {
-          return entry;
-        }
-      }),
-    );
+  const removeUser = async (user_id) => {
+    await executeQuery('DELETE FROM users WHERE user_id = ?', [
+      user_id,
+    ]).then(() => getUsers());
   };
 
-  const removeImage = (imageId) => {
-    setEntries(entries.filter((entry) => entry.id !== imageId));
-  };
+  const Item = ({item, navigation}) => (
+    <ListItem
+      onLongPress={() =>
+        Alert.alert('Delete', 'Delete User ?', [
+          {text: 'Cancel', onPress: () => console.info('cancer')},
+          {text: 'Delete', onPress: () => removeUser(item.user_id)},
+        ])
+      }
+      onPress={() => navigation.navigate('INPUTPAGE', item)}>
+      <Avatar source={{uri: item.img_url}} />
+      <ListItem.Title>{item.username}</ListItem.Title>
+    </ListItem>
+  );
+
+  const renderItem = ({item}) => <Item item={item} navigation={navigation} />;
 
   return (
     <View
@@ -69,33 +64,24 @@ const Home = ({navigation, route, logout}) => {
         marginVertical: 10,
       }}>
       <View>
-        <TouchableOpacity
-          style={{
-            marginHorizontal: 10,
-            marginBottom: 10,
-            borderRadius: 1000,
-            backgroundColor: 'red',
-            padding: 10,
-            alignItems: 'center',
-          }}
-          onPress={() => logout()}>
+        <TouchableOpacity style={styles.buttonLogout} onPress={() => logout()}>
           <Text style={{color: 'white'}}>LOGOUT</Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.buttonAdd}
+          onPress={() => navigation.navigate('INPUTPAGE')}>
+          <Text style={{color: 'white'}}>Add Item +</Text>
+        </TouchableOpacity>
       </View>
-      <ScrollView>
-        {entries.map((l) => (
-          <ListItem key={l.id} bottomDivider onPress={() => console.log(l)}>
-            <Avatar source={{uri: l.imgUrl}} />
-            <ListItem.Content>
-              <ListItem.Title>{l.name}</ListItem.Title>
-              <ListItem.Subtitle>{l.subtitle}</ListItem.Subtitle>
-            </ListItem.Content>
-            <TouchableOpacity onPress={() => removeImage(l.id)}>
-              <Icon name="delete" size={30} color="red" />
-            </TouchableOpacity>
-          </ListItem>
-        ))}
-      </ScrollView>
+      {isLoading ? (
+        <ActivityIndicator size="large" />
+      ) : (
+        <FlatList
+          renderItem={renderItem}
+          data={users}
+          keyExtractor={(item) => item.user_id.toString()}
+        />
+      )}
     </View>
   );
 };
@@ -105,5 +91,24 @@ function mapDispatchToProps(dispatch) {
     logout: () => dispatch(setLogout()),
   };
 }
+
+const styles = StyleSheet.create({
+  buttonAdd: {
+    marginHorizontal: 10,
+    marginBottom: 10,
+    borderRadius: 1000,
+    backgroundColor: '#007BFF',
+    padding: 10,
+    alignItems: 'center',
+  },
+  buttonLogout: {
+    marginHorizontal: 10,
+    marginBottom: 10,
+    borderRadius: 1000,
+    backgroundColor: '#DC3545',
+    padding: 10,
+    alignItems: 'center',
+  },
+});
 
 export default connect(null, mapDispatchToProps)(Home);

@@ -1,7 +1,7 @@
 import React, {useMemo} from 'react';
 import {FlatList, TouchableOpacity, Text, RefreshControl} from 'react-native';
 import axios from 'axios';
-import {AsyncStorage} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 function Item({item, navigation}) {
   return (

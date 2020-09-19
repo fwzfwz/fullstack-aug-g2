@@ -1,14 +1,8 @@
 import React from 'react';
-import {
-  FlatList,
-  RefreshControl,
-  Text,
-  Image,
-  View,
-  AsyncStorage,
-} from 'react-native';
+import {FlatList, RefreshControl, Text, Image, View} from 'react-native';
 import {Avatar, ListItem, Overlay} from 'react-native-elements';
 import axios from 'axios';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const getItemFromStorage = async (key) => {
   try {
